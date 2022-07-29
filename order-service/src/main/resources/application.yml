@@ -1,0 +1,20 @@
+server:
+  port: 12000
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order-management
+    username: postgres
+    password: changeme
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    generate-ddl: true
+    properties:
+      hibernate:
+        jdbc.lob.non_contextual_creation: true
+saga-advanced:
+  enabled: true
