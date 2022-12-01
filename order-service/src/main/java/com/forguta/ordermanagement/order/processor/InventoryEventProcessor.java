@@ -21,14 +21,11 @@ public class InventoryEventProcessor {
     private final OrderCommandService orderCommandService;
     private final OrderQueryService orderQueryService;
 
-    @Transactional
     @Processor(InventoryReservedEvent.class)
     public void updateOrderInventoryStatusForReserved(InventoryReservedEvent inventoryReservedEvent) {
         updateInventoryStatusByEventType(inventoryReservedEvent.getDto(), InventoryStatus.RESERVED);
-
     }
 
-    @Transactional
     @Processor(InventoryRejectedEvent.class)
     public void updateOrderInventoryStatusForRejected(InventoryRejectedEvent inventoryRejectedEvent) {
         updateInventoryStatusByEventType(inventoryRejectedEvent.getDto(), InventoryStatus.REJECTED);

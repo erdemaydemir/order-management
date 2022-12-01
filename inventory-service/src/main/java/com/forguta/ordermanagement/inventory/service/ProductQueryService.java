@@ -8,12 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
 @Service
+@Transactional
 public class ProductQueryService {
 
     private final DozerBeanMapper dozerBeanMapper;

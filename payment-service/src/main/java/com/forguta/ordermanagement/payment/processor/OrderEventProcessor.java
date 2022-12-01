@@ -17,13 +17,11 @@ public class OrderEventProcessor {
 
     private final TransactionCommandService transactionCommandService;
 
-    @Transactional
     @Processor(OrderCreatedEvent.class)
     public void allocateInventoryConsumption(OrderCreatedEvent orderCreatedEvent) {
         transactionCommandService.doTransaction(orderCreatedEvent);
     }
 
-    @Transactional
     @Processor(OrderCanceledEvent.class)
     public void deallocateInventoryConsumption(OrderCanceledEvent orderCanceledEvent) {
         transactionCommandService.abortTransaction(orderCanceledEvent);

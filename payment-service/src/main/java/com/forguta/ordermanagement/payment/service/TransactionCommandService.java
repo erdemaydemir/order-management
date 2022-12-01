@@ -16,8 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -27,7 +25,6 @@ public class TransactionCommandService {
     private final TransactionQueryService transactionQueryService;
     private final EventPublisher eventPublisher;
 
-    @Transactional
     public void doTransaction(OrderCreatedEvent orderCreatedEvent) {
         OrderDto orderDto = orderCreatedEvent.getDto();
         PaymentDto paymentDto = PaymentDto.builder()
@@ -59,12 +56,11 @@ public class TransactionCommandService {
                 );
     }
 
-    @Transactional
     public void abortTransaction(OrderCanceledEvent orderCanceledEvent) {
         OrderDto orderDto = orderCanceledEvent.getDto();
         Long orderId = orderDto.getId();
         Transaction transaction = transactionQueryService.getTransactionByOrderId(orderId);
-        if(transaction != null) {
+        if (transaction != null) {
             balanceQueryService.getBalanceById(transaction.getUserId())
                     .ifPresent(balance -> {
                         balanceQueryService.updateBalance(orderDto.getUserId(), BalanceTransactionRequest.builder()

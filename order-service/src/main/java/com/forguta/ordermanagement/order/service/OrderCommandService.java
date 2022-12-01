@@ -41,7 +41,6 @@ public class OrderCommandService {
         return savedOrder;
     }
 
-    @Transactional
     public void checkOrderByStatuses(Long orderId){
         orderQueryService.getOrderById(orderId)
                 .ifPresent(order -> {
@@ -57,7 +56,6 @@ public class OrderCommandService {
                 });
     }
 
-    @Transactional
     public void completeOrder(Long orderId) {
         Order order = orderQueryService.getOrderById(orderId).orElseThrow();
         order.setStatus(OrderStatus.COMPLETED);
@@ -69,7 +67,6 @@ public class OrderCommandService {
                 .build());
     }
 
-    @Transactional
     public void cancelOrder(Long orderId) {
         Order order = orderQueryService.getOrderById(orderId).orElseThrow();
         order.setStatus(OrderStatus.CANCELED);
